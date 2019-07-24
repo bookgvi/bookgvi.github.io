@@ -11,6 +11,7 @@ nav ul, footer ul {
 nav ul li, footer ul li {
     display: inline;
     margin-right: 20px;
+    
 }
 a {
     text-decoration: none;
@@ -40,4 +41,8 @@ ul.posts {
 
 ul.posts li {
     list-style: none;
+}
+
+.menu {
+    margin-bottom: 50px;
 }
