@@ -3,7 +3,6 @@
 }
 
  body{
-    position: relative;
     text-align: center;
 } 
 
@@ -15,6 +14,7 @@ h1, h3{
 
 .currentDay {
     background-color: yellow;
+    cursor: pointer;
 }
 
 table {
@@ -23,6 +23,17 @@ table {
     padding: 10px;
     text-align: center;
 
+}
+
+.clock{
+    display: inline-block;
+    position: fixed;
+    background-color: rgb(255, 247, 253);
+    /* font-family: arial;
+    font-size: 25px; */
+    font: 25px Arial;
+    border-style: 5px solid rgba(0,0,0, 1.0);
+    border-radius: 5px;  
 }
 
 

@@ -3,6 +3,8 @@
 // Elements for  creating calendar
 let year = 2019;
 let m = 0;
+let tooltipClock;
+let currentDay;
 
 // Date block
 let date = new Date();
@@ -16,6 +18,9 @@ for(let i=0;i<month.length; i++)
     document.body.append(createMonth(i,year));
 
 markToday(toDay, month[date.getMonth()]);
+
+document.addEventListener('mouseover', hShowClock);
+document.addEventListener('mouseout', hHideClock);
 
 
 
@@ -106,6 +111,50 @@ function DayInWeekDay(month,year){
     if (weekday==0) weekday = 7;
 
     return weekday;
+}
+
+function clock(parentElem){
+    let fragment = document.createDocumentFragment();
+    let clock = document.createElement('span');
+    let hour = document.createElement('span');
+    let min = document.createElement('span');
+    let sec = document.createElement('span');
+    clock.classList.add('clock');
+    clock.appendChild(hour);
+    clock.appendChild(min);
+    clock.appendChild(sec);
+    fragment.appendChild(clock);
+    parentElem.appendChild(fragment);
+    return clock;
+}
+
+function hShowClock(e){
+    if(e.target.classList!='currentDay') return;
+    tooltipClock = clock(e.target);
+    currentDay = e.target;
+    tooltipClock.style.top = e.target.getBoundingClientRect().top - e.target.clientHeight  + 'px';
+    tooltipClock.style.left = e.target.getBoundingClientRect().left + e.target.offsetWidth + 10 + 'px';
+
+    console.log(tooltipClock.clientWidth)
+
+    let timerId = setInterval(()=>{
+        let h =''; 
+        let m = ''; 
+        let s = '';
+        let time = new Date();
+        if(time.getHours()<10) h = '0';
+        if(time.getMinutes()<10) m = '0';
+        if(time.getSeconds()<10) s = '0';
+        tooltipClock.firstChild.textContent = h + time.getHours() + ':';
+        tooltipClock.children[1].textContent = m + time.getMinutes() + ':';
+        tooltipClock.lastChild.textContent = s + time.getSeconds();
+    },0)
+
+}
+
+function hHideClock(e){
+    if(e.target.classList!='currentDay') return;
+    currentDay.removeChild(tooltipClock);
 }
 
 ////////////////////////////////////////////////////////////////////
