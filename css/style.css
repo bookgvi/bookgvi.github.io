@@ -13,27 +13,26 @@ h1, h3{
 }
 
 .currentDay {
-    background-color: yellow;
+    background-color:  rgb(58, 58, 58);
+    color: white;
     cursor: pointer;
 }
 
 table {
-
     display: inline-table;
     padding: 10px;
     text-align: center;
+    color: rgb(32, 32, 32);
 
 }
 
 .clock{
     display: inline-block;
     position: fixed;
-    background-color: rgb(255, 247, 253);
-    /* font-family: arial;
-    font-size: 25px; */
+    background-color: rgb(58, 58, 58);
     font: 25px Arial;
-    border-style: 5px solid rgba(0,0,0, 1.0);
-    border-radius: 5px;  
+    color: rgba(255,255,255);
+    outline-color: black;
 }
 
 
