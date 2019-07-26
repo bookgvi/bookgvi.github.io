@@ -1,3 +1,5 @@
+function go(){
+let blurb = document.querySelector('.blurb');
 let shiftX;
 let shiftY;
 let hero;
@@ -44,25 +46,25 @@ function hMove(e){
 
 document.addEventListener('mousedown', hGetHero);
 function hGetHero(e){
-    e.preventDefault();
     if (e.target.classList.value === 'hero draggable' || e.target.classList.value === 'draggable'){
-        picWidth = e.target.offsetWidth;
+        e.preventDefault();        picWidth = e.target.offsetWidth;
         picHeight = e.target.offsetHeight;
         shiftX = e.clientX - e.target.getBoundingClientRect().left; //поправка по X
         shiftY = e.clientY - e.target.getBoundingClientRect().top; //поправка по Y
 
         hero = e.target;
+    }
         
         if(e.target.classList.value === 'draggable' && e.button === 0){
             let imgClone = e.target.cloneNode(true);
-            document.body.appendChild(imgClone);
+            blurb.appendChild(imgClone);
             hero = imgClone;
         }
         else if(e.target.classList.value === 'draggable' && e.button === 2){
-            document.body.removeChild(e.target);
+            e.target.parentElement.removeChild(e.target);
+            // console.log(e.target.parentElement);
         }
 
-    }
 }
 
 document.addEventListener('mouseup', hPutHero);
@@ -75,3 +77,4 @@ window.oncontextmenu = (function(e){
     //действия
     return false;
 });
+}

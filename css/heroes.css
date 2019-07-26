@@ -5,7 +5,7 @@ body {
 }
 
 #field {
-  background: url(https://js.cx/drag-heroes/field.png);
+  background: url('img/field.png');
   width: 800px;
   height: 600px;
   /* float: left; */
@@ -15,7 +15,7 @@ body {
 
 .hero {
     position: absolute;
-    background: url(https://js.cx/drag-heroes/heroes.png);
+    background: url('../img/heroes.png');
     width: 130px;
     height: 128px;
     float: left;
