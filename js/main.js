@@ -20,9 +20,8 @@ function hMainMenu(e){
 }
 
 function load(htmlUrl, scrUrl){
-    blurbParent.removeChild(blurb);
+    blurbParent.innerHTML = '';
     blurbParent.appendChild(blurb);
-
     let xhr = new XMLHttpRequest();
     xhr.open('GET',htmlUrl);
     xhr.send();
@@ -32,8 +31,8 @@ function load(htmlUrl, scrUrl){
         blurb.innerHTML = e.target.responseText;
         e.target.removeEventListener('readystatechange', hLoad);
         xhr = null;
+        loadScript(scrUrl,()=>{go();});
     }
-    loadScript(scrUrl,()=>{go();});
 }
 
 function loadScript(src, callBack){

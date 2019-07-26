@@ -3,15 +3,13 @@ let blurb = document.querySelector('.blurb');
 let shiftX;
 let shiftY;
 let hero;
-let picWidth;
-let picHeight;
 let coordX;
 let coordY;
 
 
 document.addEventListener('mousemove', hMove);
 function hMove(e){
-    e.preventDefault();
+    // e.preventDefault();
     if(!hero) return;
         coordX = e.clientX - shiftX + window.pageXOffset;
         coordY = e.clientY - shiftY + window.pageYOffset;
@@ -47,23 +45,21 @@ function hMove(e){
 document.addEventListener('mousedown', hGetHero);
 function hGetHero(e){
     if (e.target.classList.value === 'hero draggable' || e.target.classList.value === 'draggable'){
-        e.preventDefault();        picWidth = e.target.offsetWidth;
-        picHeight = e.target.offsetHeight;
+        e.preventDefault();        
         shiftX = e.clientX - e.target.getBoundingClientRect().left; //поправка по X
         shiftY = e.clientY - e.target.getBoundingClientRect().top; //поправка по Y
 
         hero = e.target;
     }
         
-        if(e.target.classList.value === 'draggable' && e.button === 0){
-            let imgClone = e.target.cloneNode(true);
-            blurb.appendChild(imgClone);
-            hero = imgClone;
-        }
-        else if(e.target.classList.value === 'draggable' && e.button === 2){
-            e.target.parentElement.removeChild(e.target);
-            // console.log(e.target.parentElement);
-        }
+        // if(e.target.classList.value === 'draggable' && e.button === 0){
+        //     // let imgClone = e.target.cloneNode(true);
+        //     hero = blurb.appendChild(e.target.cloneNode(true));
+        //     // hero = imgClone;
+        // }
+        // else if(e.target.classList.value === 'draggable' && e.button === 2){
+        //     let oldChild = e.target.parentElement.removeChild(e.target);
+        // }
 
 }
 
@@ -71,10 +67,12 @@ document.addEventListener('mouseup', hPutHero);
 function hPutHero(e){
     e.preventDefault();
     hero = null;
-}
+}   
 
+window.addEventListener('contextmenu',()=>{
+    
+})
 window.oncontextmenu = (function(e){
-    //действия
     return false;
 });
 }
