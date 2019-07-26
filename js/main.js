@@ -3,7 +3,7 @@ let blurb = document.querySelector('.blurb');
 let blurbParent = blurb.parentNode;
 
 mMenu.addEventListener('click', hMainMenu);
-
+loadScript('js/table.js',()=>{go();});
 function hMainMenu(e){
     let menu = e.target.dataset.menu;
     if(!menu) return;
