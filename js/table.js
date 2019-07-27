@@ -1,6 +1,6 @@
 'use strict';
 function go(){
-let blurb = document.querySelector('.blurb');
+let page = document.querySelector('.page');
 // Elements for  creating calendar
 let year = 2019;
 let m = 0;
@@ -16,7 +16,7 @@ let month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'Au
 
 
 for(let i=0;i<month.length; i++)
-    blurb.append(createMonth(i,year));
+    page.append(createMonth(i,year));
 
 markToday(toDay, month[date.getMonth()]);
 
