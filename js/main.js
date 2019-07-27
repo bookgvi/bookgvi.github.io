@@ -17,6 +17,7 @@ function hMainMenu(e){
     if(!menu) return;
     switch(menu){
         case 'home':
+                load('pages/blank.html');
                 loadScript('js/table.js',()=>{go();});
             break;
         case 'funnyHeroes':
