@@ -1,4 +1,3 @@
-'use strict';
 function go(){
 let page = document.querySelector('.page');
 // Elements for  creating calendar
