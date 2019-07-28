@@ -31,8 +31,8 @@ function hMainMenu(e){
     if(!menu) return;
     switch(menu){
         case 'home':
-                load('pages/blank.html', page);
-                loadScript('js/table.js', page, ()=>{go();});
+            container.appendChild(page);
+            loadScript('js/table.js', page, ()=>{go();});
             break;
         case 'funnyHeroes':
             load('pages/funnyHeroes.html', page);
