@@ -97,9 +97,9 @@ let container = document.querySelector('.container');
 const page = document.createElement('div');   // Для странички с футбольным полем
 page.classList.add('page');
 hero.page = page;  
-page.addEventListener('mousemove', hero.hMove, true);
-page.addEventListener('mousedown', hero.hGetHero, true);
-page.addEventListener('mouseup', hero.hPutHero, true);
+page.addEventListener('mousemove', hero.hMove);
+page.addEventListener('mousedown', hero.hGetHero);
+page.addEventListener('mouseup', hero.hPutHero);
 window.oncontextmenu = (function(e){return false;});
 ///////////////////////////////////////////////////////////////////////////////////////////////
 document.addEventListener('input',hInput);          //Для формы ввода данных
