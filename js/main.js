@@ -2,20 +2,24 @@ const hero = require('./heroes.js');
 const dataBase = require('./dataBase');
 const util = require('./util.js');
 ///////////////////////////////////////////////////////////////////////////////////////////////
-let mMenu = document.querySelector('.menu');  //Обработка нажатий на основное меню
+let mMenu = document.querySelector('.menu');        //Обработка нажатий на основное меню
 let container = document.querySelector('.container');
+const forma = document.createElement('div');
+const page = document.createElement('div');
+page.classList.add('page');     
+forma.classList.add('forma');
+container.appendChild(page);
+container.appendChild(forma);
+
 ///////////////////////////////////////////////////////////////////////////////////////////////
-const page = document.createElement('div');   // Для странички с футбольным полем
-page.classList.add('page');
-hero.page = page;  
+hero.page = page;                                    // Для странички с футбольным полем
 page.addEventListener('mousemove', hero.hMove);
 page.addEventListener('mousedown', hero.hGetHero);
 page.addEventListener('mouseup', hero.hPutHero);
 window.oncontextmenu = (function(e){return false;});
 ///////////////////////////////////////////////////////////////////////////////////////////////
-document.addEventListener('input',hInput);          //Для формы ввода данных
+document.addEventListener('input', hInput);          //Для формы ввода данных
 document.addEventListener('change', util.check);
-const forma = document.createElement('div');
 function hInput(e){
     dataBase.write(e);
     util.check();
@@ -24,14 +28,13 @@ function hInput(e){
 
 
 mMenu.addEventListener('click', hMainMenu);
-container.appendChild(page);
 loadScript('js/table.js', page, ()=>{go();});
 function hMainMenu(e){
     let menu = e.target.dataset.menu;
     if(!menu) return;
     switch(menu){
         case 'home':
-            container.appendChild(page);
+            clearContainer();
             loadScript('js/table.js', page, ()=>{go();});
             break;
         case 'funnyHeroes':
@@ -47,8 +50,7 @@ function hMainMenu(e){
 
 
 function load(htmlUrl, p=page){
-    container.innerHTML = '';
-    container.appendChild(p);
+    clearContainer();
     let xhr = new XMLHttpRequest();
     xhr.open('GET',htmlUrl);
     xhr.send();
@@ -62,9 +64,7 @@ function load(htmlUrl, p=page){
 }
 
 function loadScript(src, p, callBack){
-    // container.innerHTML = '';
-    // container.appendChild(p);
-
+    clearContainer();
     let script = document.createElement('script');
     script.src = src;
     p.appendChild(script);
@@ -74,4 +74,9 @@ function loadScript(src, p, callBack){
         callBack();
         script.removeEventListener('load',hExec);
     }
+}
+
+function clearContainer(){
+    page.innerHTML = ' ';
+    forma.innerHTML = ' ';
 }
