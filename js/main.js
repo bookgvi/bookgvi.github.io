@@ -1,44 +1,54 @@
 const hero = require('./heroes.js');
 const dataBase = require('./dataBase');
 const util = require('./util.js');
-///////////////////////////////////////////////////////////////////////////////////////////////
+
+const pageStatus = {};
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 let mMenu = document.querySelector('.menu');        //Обработка нажатий на основное меню
 let container = document.querySelector('.container');
-const forma = document.createElement('div');
-const page = document.createElement('div');
-page.classList.add('page');     
-forma.classList.add('forma');
-container.appendChild(page);
-container.appendChild(forma);
 
-///////////////////////////////////////////////////////////////////////////////////////////////
-hero.page = page;                                    // Для странички с футбольным полем
-page.addEventListener('mousemove', hero.hMove);
-page.addEventListener('mousedown', hero.hGetHero);
-page.addEventListener('mouseup', hero.hPutHero);
+const forma = document.createElement('div');        //Подготавливаем странички
+const fun = document.createElement('div');
+const calendar = document.createElement('div');
+
+fun.classList.add('fun');                           // Устанавливаем классы, для стилей, они же будут идентификаторы
+forma.classList.add('forma');
+calendar.classList.add('calendar'); 
+
+container.appendChild(fun);                         // Добавляем элементы на стартовую страничку
+container.appendChild(forma);
+container.appendChild(calendar);
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+hero.page = fun;                                    // Для странички с футбольным полем
+fun.addEventListener('mousemove', hero.hMove);
+fun.addEventListener('mousedown', hero.hGetHero);
+fun.addEventListener('mouseup', hero.hPutHero);
 window.oncontextmenu = (function(e){return false;});
-///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 document.addEventListener('input', hInput);          //Для формы ввода данных
 document.addEventListener('change', util.check);
 function hInput(e){
     dataBase.write(e);
     util.check();
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+loadScript('js/table.js', calendar, ()=>{go();});       // Календарь формируется полностью динамически он же - стартовая страница
 
 
 
-mMenu.addEventListener('click', hMainMenu);
-loadScript('js/table.js', page, ()=>{go();});
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+mMenu.addEventListener('click', hMainMenu);             // Обработка нажатий на главное меню
 function hMainMenu(e){
     let menu = e.target.dataset.menu;
     if(!menu) return;
     switch(menu){
         case 'home':
-            clearContainer();
-            loadScript('js/table.js', page, ()=>{go();});
+            load('pages/blank.html', calendar);
+            loadScript('js/table.js', calendar, ()=>{go();});
             break;
         case 'funnyHeroes':
-            load('pages/funnyHeroes.html', page);
+            load('pages/funnyHeroes.html', fun);
             break;
         case 'forma':
             
@@ -48,9 +58,12 @@ function hMainMenu(e){
 }
 
 
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function load(htmlUrl, p=page){
-    clearContainer();
+    if(!pageStatus[p.className]){
+        pageStatus[p.className] = p;
+        swapPages(pageStatus, p);
+
     let xhr = new XMLHttpRequest();
     xhr.open('GET',htmlUrl);
     xhr.send();
@@ -60,13 +73,15 @@ function load(htmlUrl, p=page){
         p.innerHTML = e.target.responseText;
         e.target.removeEventListener('readystatechange', hLoad);
         xhr = null;
+        }
     }
+    else swapPages(pageStatus, p);
 }
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function loadScript(src, p, callBack){
-    clearContainer();
     let script = document.createElement('script');
     script.src = src;
+    p.innerHTML = ' ';
     p.appendChild(script);
 
     script.addEventListener('load',hExec);
@@ -76,7 +91,10 @@ function loadScript(src, p, callBack){
     }
 }
 
-function clearContainer(){
-    page.innerHTML = ' ';
-    forma.innerHTML = ' ';
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function swapPages(obj, page){
+    for(const key in obj){
+        if(obj[key]!=page) obj[key].hidden = true;
+        else obj[key].hidden = false;
+    }
 }

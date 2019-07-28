@@ -1,0 +1,50 @@
+
+#field {
+  background: url('../img/field.png');
+  width: 800px;
+  height: 600px;
+  /* float: left; */
+  margin: 100px auto;
+}
+/* герои и мяч (переносимые элементы) */
+
+.hero {
+    position: absolute;
+    background: url('../img/heroes.png');
+    width: 130px;
+    height: 128px;
+    float: left;
+    cursor: pointer;
+}
+
+.draggable {
+    position: absolute;
+    cursor: pointer;
+    top: 100px;
+    left: 200px;
+}
+
+#hero1 { 
+  background-position: 0 0;
+}
+
+#hero2 {
+  background-position: 0 -128px;
+}
+
+#hero3 {
+  background-position: -120px 0;
+}
+
+#hero4 {
+  background-position: -125px -128px;
+}
+
+#hero5 {
+  background-position: -248px -128px;
+}
+
+#hero6 {
+  background-position: -244px 0;
+} */
+

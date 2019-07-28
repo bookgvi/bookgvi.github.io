@@ -1,5 +1,5 @@
 function go(){
-let page = document.querySelector('.page');
+let page = document.querySelector('.calendar');
 // Elements for  creating calendar
 let year = 2019;
 let m = 0;
