@@ -45,6 +45,8 @@ hMove: (e)=>{
 
 hGetHero: (e)=>{
     e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
     if (e.target.classList.value === 'hero draggable' || e.target.classList.value === 'draggable'){
         this.shiftX = e.clientX - e.target.getBoundingClientRect().left; //поправка по X
         this.shiftY = e.clientY - e.target.getBoundingClientRect().top; //поправка по Y
@@ -56,7 +58,6 @@ hGetHero: (e)=>{
         else if(e.target.classList.value === 'draggable' && e.button === 2){
             e.target.parentElement.removeChild(e.target);
         }
-
 },
 
 hPutHero: (e)=>{

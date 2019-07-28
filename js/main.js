@@ -1,43 +1,61 @@
 const hero = require('./heroes.js');
-let mMenu = document.querySelector('.menu');
-let page = document.querySelector('.page');
-let pageParent = page.parentNode;
-
-hero.page = document.querySelector('.page');
-document.addEventListener('mousemove', hero.hMove);
-document.addEventListener('mousedown', hero.hGetHero);
-document.addEventListener('mouseup', hero.hPutHero);
+const dataBase = require('./dataBase');
+const util = require('./util.js');
+///////////////////////////////////////////////////////////////////////////////////////////////
+let mMenu = document.querySelector('.menu');  //Обработка нажатий на основное меню
+let container = document.querySelector('.container');
+///////////////////////////////////////////////////////////////////////////////////////////////
+const page = document.createElement('div');   // Для странички с футбольным полем
+page.classList.add('page');
+hero.page = page;  
+page.addEventListener('mousemove', hero.hMove, true);
+page.addEventListener('mousedown', hero.hGetHero, true);
+page.addEventListener('mouseup', hero.hPutHero, true);
 window.oncontextmenu = (function(e){return false;});
+///////////////////////////////////////////////////////////////////////////////////////////////
+document.addEventListener('input',hInput);          //Для формы ввода данных
+document.addEventListener('change', util.check);
+const forma = document.createElement('div');
+function hInput(e){
+    dataBase.write(e);
+    util.check();
+}
+
 
 
 mMenu.addEventListener('click', hMainMenu);
+container.appendChild(page);
 loadScript('js/table.js',()=>{go();});
 function hMainMenu(e){
     let menu = e.target.dataset.menu;
     if(!menu) return;
     switch(menu){
         case 'home':
-                load('pages/blank.html');
+                load('pages/blank.html', page);
                 loadScript('js/table.js',()=>{go();});
             break;
         case 'funnyHeroes':
-            load('pages/funnyHeroes.html');
+            load('pages/funnyHeroes.html', page);
+            break;
+        case 'forma':
+            
+            load('pages/forma.html', forma);
             break;
     }
 }
 
 
 
-function load(htmlUrl){
-    pageParent.innerHTML = '';
-    pageParent.appendChild(page);
+function load(htmlUrl, p=page){
+    container.innerHTML = '';
+    container.appendChild(p);
     let xhr = new XMLHttpRequest();
     xhr.open('GET',htmlUrl);
     xhr.send();
     xhr.addEventListener('readystatechange', hLoad);
     function hLoad(e){
         if(e.target.readyState !=4 || e.target.status !=200) return;
-        page.innerHTML = e.target.responseText;
+        p.innerHTML = e.target.responseText;
         e.target.removeEventListener('readystatechange', hLoad);
         xhr = null;
         // loadScript(scrUrl,()=>{go();});

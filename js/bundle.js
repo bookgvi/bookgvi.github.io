@@ -1,5 +1,26 @@
 (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 module.exports = {
+
+write: (e)=>{
+    if(!e.target.dataset.base) return;
+    let name = e.target.dataset.base;
+    if(!this[name]){
+        this[name]=[];
+        this[name][0] = e.target.value;
+    }
+    else {this[name][0] = e.target.value;}
+    // util.check();
+},
+
+read: (block)=>{
+        let fields = block.querySelectorAll('[data-base]');
+        for(let i=0; i<fields.length; i++){
+            fields[i].textContent =  this[fields[i].dataset.base];
+        }
+}
+}
+},{}],2:[function(require,module,exports){
+module.exports = {
 page: null,
 shiftX: 0,
 shiftY: 0,
@@ -46,6 +67,8 @@ hMove: (e)=>{
 
 hGetHero: (e)=>{
     e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
     if (e.target.classList.value === 'hero draggable' || e.target.classList.value === 'draggable'){
         this.shiftX = e.clientX - e.target.getBoundingClientRect().left; //поправка по X
         this.shiftY = e.clientY - e.target.getBoundingClientRect().top; //поправка по Y
@@ -57,54 +80,71 @@ hGetHero: (e)=>{
         else if(e.target.classList.value === 'draggable' && e.button === 2){
             e.target.parentElement.removeChild(e.target);
         }
-
 },
 
 hPutHero: (e)=>{
     this.hero = null;
 }   
 }
-},{}],2:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 const hero = require('./heroes.js');
-let mMenu = document.querySelector('.menu');
-let page = document.querySelector('.page');
-let pageParent = page.parentNode;
-
-hero.page = document.querySelector('.page');
-document.addEventListener('mousemove', hero.hMove);
-document.addEventListener('mousedown', hero.hGetHero);
-document.addEventListener('mouseup', hero.hPutHero);
+const dataBase = require('./dataBase');
+const util = require('./util.js');
+///////////////////////////////////////////////////////////////////////////////////////////////
+let mMenu = document.querySelector('.menu');  //Обработка нажатий на основное меню
+let container = document.querySelector('.container');
+///////////////////////////////////////////////////////////////////////////////////////////////
+const page = document.createElement('div');   // Для странички с футбольным полем
+page.classList.add('page');
+hero.page = page;  
+page.addEventListener('mousemove', hero.hMove, true);
+page.addEventListener('mousedown', hero.hGetHero, true);
+page.addEventListener('mouseup', hero.hPutHero, true);
 window.oncontextmenu = (function(e){return false;});
+///////////////////////////////////////////////////////////////////////////////////////////////
+document.addEventListener('input',hInput);          //Для формы ввода данных
+document.addEventListener('change', util.check);
+const forma = document.createElement('div');
+function hInput(e){
+    dataBase.write(e);
+    util.check();
+}
+
 
 
 mMenu.addEventListener('click', hMainMenu);
+container.appendChild(page);
 loadScript('js/table.js',()=>{go();});
 function hMainMenu(e){
     let menu = e.target.dataset.menu;
     if(!menu) return;
     switch(menu){
         case 'home':
-                load('pages/blank.html');
+                load('pages/blank.html', page);
                 loadScript('js/table.js',()=>{go();});
             break;
         case 'funnyHeroes':
-            load('pages/funnyHeroes.html');
+            load('pages/funnyHeroes.html', page);
+            break;
+        case 'forma':
+            
+            load('pages/forma.html', forma);
             break;
     }
 }
 
 
 
-function load(htmlUrl){
-    pageParent.innerHTML = '';
-    pageParent.appendChild(page);
+function load(htmlUrl, p=page){
+    container.innerHTML = '';
+    container.appendChild(p);
     let xhr = new XMLHttpRequest();
     xhr.open('GET',htmlUrl);
     xhr.send();
     xhr.addEventListener('readystatechange', hLoad);
     function hLoad(e){
         if(e.target.readyState !=4 || e.target.status !=200) return;
-        page.innerHTML = e.target.responseText;
+        p.innerHTML = e.target.responseText;
         e.target.removeEventListener('readystatechange', hLoad);
         xhr = null;
         // loadScript(scrUrl,()=>{go();});
@@ -122,4 +162,27 @@ function loadScript(src, callBack){
     }
 }
 
-},{"./heroes.js":1}]},{},[2]);
+},{"./dataBase":1,"./heroes.js":2,"./util.js":4}],4:[function(require,module,exports){
+const dataBase = require('./dataBase.js');
+module.exports = {
+
+    check(e){
+        if(!e){
+            let checkBoxes = document.querySelectorAll('input:checked');
+            if (!checkBoxes) return;
+            for(let i=0; i<checkBoxes.length; i++){
+                let block = document.querySelector('.'+ checkBoxes[i].id);
+                dataBase.read(block);
+            }
+    
+        }
+        else{
+            let block = document.querySelector('.'+ e.target.id);
+            if(!e.target.checked) return;
+                dataBase.read(block);
+        }
+    }
+
+}
+
+},{"./dataBase.js":1}]},{},[3]);

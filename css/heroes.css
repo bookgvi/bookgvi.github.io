@@ -1,11 +1,6 @@
-html,
-body {
-  margin: 0;
-  padding: 0;
-}
 
 #field {
-  background: url('img/field.png');
+  background: url('../img/field.png');
   width: 800px;
   height: 600px;
   /* float: left; */
