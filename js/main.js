@@ -33,10 +33,13 @@ function hInput(e){
     util.check();
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// pageStatus[calendar.className] = calendar;              // Заносим информацию о стартовой странице 
 loadScript('js/table.js', calendar, ()=>{go();});       // Календарь формируется полностью динамически он же - стартовая страница
 
 
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 mMenu.addEventListener('click', hMainMenu);             // Обработка нажатий на главное меню
 function hMainMenu(e){
@@ -44,7 +47,6 @@ function hMainMenu(e){
     if(!menu) return;
     switch(menu){
         case 'home':
-            load('pages/blank.html', calendar);
             loadScript('js/table.js', calendar, ()=>{go();});
             break;
         case 'funnyHeroes':
@@ -57,7 +59,7 @@ function hMainMenu(e){
     }
 }
 
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function load(htmlUrl, p=page){
     if(!pageStatus[p.className]){
@@ -79,16 +81,21 @@ function load(htmlUrl, p=page){
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function loadScript(src, p, callBack){
-    let script = document.createElement('script');
-    script.src = src;
-    p.innerHTML = ' ';
-    p.appendChild(script);
+    if(!pageStatus[p.className]){
+        pageStatus[p.className] = p;
+        swapPages(pageStatus, p);
+        let script = document.createElement('script');
+        script.src = src;
+        p.innerHTML = ' ';
+        p.appendChild(script);
 
-    script.addEventListener('load',hExec);
-    function hExec(){
-        callBack();
-        script.removeEventListener('load',hExec);
+        script.addEventListener('load',hExec);
+        function hExec(){
+            callBack();
+            script.removeEventListener('load',hExec);
+        }
     }
+    else swapPages(pageStatus, p);
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
