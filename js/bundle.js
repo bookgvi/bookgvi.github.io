@@ -114,14 +114,14 @@ function hInput(e){
 
 mMenu.addEventListener('click', hMainMenu);
 container.appendChild(page);
-loadScript('js/table.js',()=>{go();});
+loadScript('js/table.js', page, ()=>{go();});
 function hMainMenu(e){
     let menu = e.target.dataset.menu;
     if(!menu) return;
     switch(menu){
         case 'home':
                 load('pages/blank.html', page);
-                loadScript('js/table.js',()=>{go();});
+                loadScript('js/table.js', page, ()=>{go();});
             break;
         case 'funnyHeroes':
             load('pages/funnyHeroes.html', page);
@@ -147,14 +147,17 @@ function load(htmlUrl, p=page){
         p.innerHTML = e.target.responseText;
         e.target.removeEventListener('readystatechange', hLoad);
         xhr = null;
-        // loadScript(scrUrl,()=>{go();});
     }
 }
 
-function loadScript(src, callBack){
+function loadScript(src, p, callBack){
+    // container.innerHTML = '';
+    // container.appendChild(p);
+
     let script = document.createElement('script');
     script.src = src;
-    page.appendChild(script);
+    p.appendChild(script);
+
     script.addEventListener('load',hExec);
     function hExec(){
         callBack();
