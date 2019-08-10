@@ -17,7 +17,8 @@ let month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'Au
 for(let i=0;i<month.length; i++)
     page.append(createMonth(i,year));
 
-markToday(toDay, month[date.getMonth()]);
+let toDayCorrection = toDay + DayInWeekDay(date.getMonth(), date.getFullYear()) - 1;
+markToday(toDayCorrection, month[date.getMonth()]);
 
 document.addEventListener('mouseover', hShowClock);
 document.addEventListener('mouseout', hHideClock);
