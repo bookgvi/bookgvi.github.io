@@ -13,9 +13,19 @@ let tdayOfWeek = date.getDay();
 let weekday = ['Mon','Tue','Wen','Thu','Fri','Sat', 'Sun'];
 let month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
+const divYear = document.createElement('div');
+const h1Year = document.createElement('h1');
+h1Year.innerHTML =  new Date().getFullYear();
+h1Year.classList.add('mx-auto');
+h1Year.classList.add('text-muted');
+
+divYear.classList.add('row');
+
+page.appendChild(h1Year);  // Порядок этих аппендов важен, чтобы год был "над" календарем
+page.appendChild(divYear);
 
 for(let i=0;i<month.length; i++)
-    page.append(createMonth(i,year));
+    divYear.append(createMonth(i,year));
 
 let toDayCorrection = toDay + DayInWeekDay(date.getMonth(), date.getFullYear()) - 1;
 markToday(toDayCorrection, month[date.getMonth()]);
@@ -39,9 +49,13 @@ function createMonth(setMonth,setYear){
     let td = []; //Tables cells
 
     // Month - header
-    let mTr = document.createElement('caption');
-    table.appendChild(mTr);
-    mTr.innerHTML = '<h3>' + month[setMonth] + ' ' + year + '</h3>';
+    let divT = document.createElement('div');
+    divT.classList.add('col-lg-3');
+    let mTr = document.createElement('h2');
+    mTr.classList.add('mt-5');
+    mTr.classList.add('text-muted');
+    divT.appendChild(mTr);
+    mTr.innerHTML = '<h3>' + month[setMonth] + ' '  + '</h3>';
 
     // Week Days
     let weekTr = document.createElement('tr');
@@ -70,8 +84,8 @@ function createMonth(setMonth,setYear){
         }
     }
             
-    document.body.appendChild(table); // Draw the table
-    return table;
+    divT.appendChild(table); // Draw the table
+    return divT;
 }
 
 // Mark TODAY

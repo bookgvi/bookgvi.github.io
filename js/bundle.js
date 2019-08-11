@@ -102,7 +102,8 @@ const calendar = document.createElement('div');
 
 fun.classList.add('fun');                           // Устанавливаем классы, для стилей, они же будут идентификаторы
 forma.classList.add('forma');
-calendar.classList.add('calendar'); 
+calendar.classList.add('calendar');
+// calendar.classList.add('row'); 
 
 container.appendChild(fun);                         // Добавляем элементы на стартовую страничку
 container.appendChild(forma);

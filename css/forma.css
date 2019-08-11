@@ -1,4 +1,9 @@
-.show1, .show2{
-    display: inline-block;
-    padding: 5em 10em;
+.form-group {
+    text-align: left;
+}
+.form-control{
+    width: 90%;
+}
+label{
+    margin-bottom: 0;
 }

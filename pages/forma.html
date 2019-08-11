@@ -1,37 +1,38 @@
     <!-- input data area -->
-    <div class="input">
-        <p>
+<form class='row'>
+    <div class="input form-group col-md">
             <label for="name">You name: </label>
-            <input type="text" id='name' data-base='name'>
-        </p>
-        <p>
+            <input type="text" id='name' data-base='name' class='form-control'>
             <label for="surname">You surname: </label>
-            <input type="text" id='surname' data-base='surname'>
-        </p>
-        <p>
+            <input type="text" id='surname' data-base='surname' class='form-control'>
             <label for="city">City: </label>
-            <input type="text" id='city' data-base='city'>
-        </p>
+            <input type="text" id='city' data-base='city' class='form-control'>
     </div>
     <!-- Show data area -->
     
-
-    <div class="show1">        
-        <p>Result....</p>
-        <label for="show1">Sync...</label>
-        <input type="checkbox" name="" id="show1" checked>
-
-        <p><span class="name" data-base='name'></span></p>
-        <p><span class="surname" data-base='surname'></span></p>
-        <p><span class="city" data-base='city'></span></p>
+    <div class="form-group col-md">
+        <div class="show1">        
+            <label for="name">Result...</label>
+            <input type="checkbox" name="" id="show1" checked>
+            <label for="name"></label>
+            <span class="name form-control" data-base='name'></span>
+            <label for="name"></label>
+            <span class="surname form-control" data-base='surname'></span>
+            <label for="name"></label>
+            <span class="city form-control" data-base='city'></span>
+        </div>
     </div>
-    <div class="show2">        
-        <p>Another result....</p>
-        <label for="show2">Sync...</label>
-        <input type="checkbox" name="" id="show2">
-        
-        <p><span class="name" data-base='name'></span></p>
-        <p><span class="surname" data-base='surname'></span></p>
-        <p><span class="city" data-base='city'></span></p>
+    <div class="form-group col-md">
+        <div class="show2">        
+            <label for="name">Another result....</label>
+            <input type="checkbox" name="" id="show2">
+            <label for="name"></label>   
+            <span class="name form-control" data-base='name'></span>
+            <label for="name"></label>
+            <span class="surname form-control" data-base='surname'></span>
+            <label for="name"></label>
+            <span class="city form-control" data-base='city'></span>
+        </div>
     </div>
+</form>
         <!-- <script src="bundle.js"></script> -->
