@@ -1,7 +1,7 @@
 function go(){
 let page = document.querySelector('.calendar');
 // Elements for  creating calendar
-let year = 2019;
+let year = new Date().getFullYear();
 let m = 0;
 let tooltipClock;
 let currentDay;
@@ -59,7 +59,7 @@ function createMonth(setMonth,setYear){
 
     // Week Days
     let weekTr = document.createElement('tr');
-    let weekTd = []; 
+    let weekTd = [];
     table.appendChild(weekTr);
     for(let i = 0; i<7; i++){
         weekTd[i] = document.createElement('th');
@@ -83,7 +83,7 @@ function createMonth(setMonth,setYear){
             else td[cell].style.border = 0; // Не обрамлять ячейки после конца месяца
         }
     }
-            
+    
     divT.appendChild(table); // Draw the table
     return divT;
 }
@@ -151,8 +151,8 @@ function hShowClock(e){
     tooltipClock.style.left = e.target.getBoundingClientRect().left + e.target.offsetWidth + 10 + 'px';
 
     let timerId = setInterval(()=>{
-        let h =''; 
-        let m = ''; 
+        let h ='';
+        let m = '';
         let s = '';
         let time = new Date();
         if(time.getHours()<10) h = '0';
