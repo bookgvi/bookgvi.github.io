@@ -4,7 +4,7 @@
 
  body{
     text-align: center;
-} 
+}
 
 h1, h3{
     margin: auto;
@@ -31,8 +31,9 @@ table {
     position: fixed;
     background-color: rgb(58, 58, 58);
     font: 25px Arial;
-    color: rgba(255,255,255);
+    color: rgb(255,255,255);
     outline-color: black;
+    padding: 2px 7px;
 }
 
 
